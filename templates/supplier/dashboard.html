@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+<div class="container-fluid mt-2 pt-4">
+    <div class="row mt-3 g-0">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light border-end mt-5 vh-100 p-4" style="background-color: #dfd3c3;">
+            <hr>
+            <ul class="nav flex-column ml-5">
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href=""><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'new-order' %}"><i
+                            class="fas fa-boxes"></i> My Orders </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 mt-4 p-4">
+
+            <!-- Dashboard Header -->
+            <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                <h2 class="fw-bold">Inventory Manager Dashboard</h2>
+            </div>
+
+            <!-- Notifications -->
+            {% if new_orders_count > 0 %}
+            <div class="alert alert-warning shadow-sm">
+                <strong>🔔 Notifications:</strong> You have get <strong> {{ new_orders_count }}</strong> New Order !
+                Please Check It ...! <b><a href="{% url 'new-order' %}"> Click Here To Check </a></b>
+            </div>
+            {% endif %}
+
+            <!-- Dashboard Stats -->
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card bg-warning shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">New Orders</h5>
+                            <p class="card-text"><strong>{{ new_orders_count }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-success shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Confirmed</h5>
+                            <p class="card-text"><strong>{{ delivery_confirmation_count }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-danger shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Cancelled</h5>
+                            <p class="card-text"><strong>{{ delivery_cancelled_count }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of Row -->
+    </div> <!-- End of Container -->
+</div>
+    {% endblock %}

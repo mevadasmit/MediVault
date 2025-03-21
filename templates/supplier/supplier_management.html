@@ -1,0 +1,99 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+<div class="mt-5">
+    <div class="container" style="padding-top: 70px">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Supplier Order Requests</h3>
+        </div>
+
+        <div class="mt-2">
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered shadow-sm">
+                    <thead class="bg-light">
+                    <tr class="text-center">
+                        <th>Order ID</th>
+                        <th>Organization</th>
+                        <th>Inventory Manager</th>
+                        <th>Product Name</th>
+                        <th>Requested Total Products</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in supplier_orders %}
+                    <tr class="text-center">
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.inventory_manager.organization.name }}</td>
+                        <td>{{ order.inventory_manager.user.get_full_name }}</td>
+                        <td>
+                            {% for item in order.order_items.all %}
+                            {{ item.inventory.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ order.total_products }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>
+                            <span class="badge
+                                {% if order.status == 'Pending' %} bg-warning text-dark
+                                {% elif order.status == 'Confirmed' %} bg-info
+                                {% elif order.status == 'Delivered' %} bg-success
+                                {% elif order.status == 'Cancelled' %} bg-danger
+                                {% else %} bg-secondary {% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'order_information' order.id %}" class="btn btn-sm btn-info">View</a>
+                            {% if order.status != "Confirmed" %}
+                            <a href="{% url 'supplier_order_update' order.id %}" class="btn btn-sm btn-warning mt-2">Update</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">No orders available.</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if is_paginated %}
+        <div class="d-flex justify-content-center mt-3">
+            {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mx-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <a class="btn btn-info mx-1" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a class="btn btn-outline-info mx-1" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mx-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-between">
+                    <button class="btn btn-info">
+                        <a href="{% url 'supplier_dashboard' %}" style="text-decoration: none; color: black">
+                            &lt; Back To Main
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

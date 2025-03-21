@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+{% block start %}
+<section class="section-content d-flex justify-content-center align-items-center" style="min-height: 84vh; margin-top: 110px; text-align: center;">
+    <div>
+        <h1>For registration or inquiries, please contact <br>
+            <strong>admin@gmail.com</strong> or call <strong>0000000000</strong>.
+        </h1>
+        <h6 class="mt-3">Already have your ID and password? <a href="{% url 'user-login' %}" style="color: #3a8ba1;">Log in here</a>.</h6>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base/base.html" %}
+
+{% block start %}
+<div class="container py-5">
+    <h1 class="mb-5">Your Shopping Cart</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            {% if cart_items %}
+            <!-- Cart Items -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% for item in cart_items %}
+                    <div class="row cart-item mb-3 align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="card-title">{{ item.inventory.name }}</h5>
+                            <p class="text-muted">Category: {{ item.inventory.inventory_category.name }}</p>
+                            <p class="text-muted">Supplier: {{ item.inventory.supplier.first_name }} {{ item.inventory.supplier.last_name }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <form method="post" action="{% url 'update_cart_quantity' item.id %}">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <button type="submit" name="action" value="decrease"
+                                            class="btn btn-outline-secondary btn-sm">-
+                                    </button>
+                                    <input type="text" class="form-control form-control-sm text-center quantity-input"
+                                           value="{{ item.quantity }}" readonly>
+                                    <button type="submit" name="action" value="increase"
+                                            class="btn btn-outline-secondary btn-sm">+
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <p class="fw-bold">₹{{ item.total_price }}</p>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <form method="post" action="{% url 'remove_from_cart' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash">Trash</i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Continue Shopping Button -->
+            <div class="text-start mb-4">
+                <a href="{% url 'supplier-selection' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2">< Back To Products ></i>
+                </a>
+            </div>
+            {% else %}
+            <p class="text-muted text-center">Your cart is empty.</p>
+            <div class="text-start mb-4">
+                <a href="{% url 'supplier-selection' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2">< Back To Products ></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Cart Summary -->
+            <div class="card cart-summary">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <span>₹{{ cart.total_price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Total Products</span>
+                        <span>{{ cart.total_products }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong>Grand Total</strong>
+                        <strong>₹{{ cart.total_price }}</strong>
+                    </div>
+                    <button type="submit"><a class="btn btn-primary w-100" href="{% url 'order_confirm' %}">Proceed to
+                        Checkout</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
