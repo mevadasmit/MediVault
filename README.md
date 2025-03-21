@@ -32,7 +32,7 @@ It facilitates smooth operations for **nurses, inventory managers, and administr
 
 ### **1️⃣ Clone the repository**
 ```bash
- git clone https://github.com/mevada-smit/medivault.git
+ git clone (https://github.com/mevadasmit/MediVault.git)
  cd medivault
 ```
 
