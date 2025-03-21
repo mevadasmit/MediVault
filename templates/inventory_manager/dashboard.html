@@ -1,0 +1,93 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+<div class="container-fluid mt-2 pt-4">
+    <div class="row mt-3 g-0">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light border-end mt-5 vh-100 p-4" style="background-color: #dfd3c3;">
+            <hr>
+            <ul class="nav flex-column ml-5">
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'inventory_manager_dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'nurse_management' %}"><i
+                            class="fas fa-user-nurse"></i> Nurse Management</a>
+                </li>
+                <li class="nav-item">
+
+                    <div class="nav-item">
+                        <a class="nav-link text-dark fw-bold" type="button" id="dropdownMenu2"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fas fa-boxes"></i>
+                            Inventory Management
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <a href="{% url 'inventory-management' %}" class="nav-link text-dark fw-bold" type="button">Manage
+                                Invetory </a>
+                            <a href="{% url 'request-list' %}" class="nav-link text-dark fw-bold" type="button">Manage
+                                Request</a>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'supplier-selection' %}"><i
+                            class="fas fa-shopping-cart"></i> Buy Inventory </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'order_list' %}"><i
+                            class="fab fa-buffer"></i> My Orders </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'view_cart' %}"><i
+                            class="fab fa-opencart"></i> My Cart </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 mt-4 p-4">
+
+            <!-- Dashboard Header -->
+            <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                <h2 class="fw-bold">Inventory Manager Dashboard</h2>
+            </div>
+
+            <!-- Notifications -->
+            {% if approved_suppliers > 0 %}
+            <div class="alert alert-warning shadow-sm">
+                <strong>🔔 Notifications:</strong> You have get <strong>{{ approved_suppliers }}</strong> order
+                Delivered.!
+                Please Confirm the Delivered Status <a href="{% url 'order_list' %}"> Click Here To Update</a>
+            </div>
+            {% endif %}
+
+            <!-- Dashboard Stats -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card bg-warning shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Pending</h5>
+                            <p class="card-text"><strong>{{ pending_orders_count }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card bg-success shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Delivered</h5>
+                            <p class="card-text"><strong>{{ approved_suppliers_count }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of Main Content -->
+    </div> <!-- End of Row -->
+</div> <!-- End of Container -->
+
+{% endblock %}

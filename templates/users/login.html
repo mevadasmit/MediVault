@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+{% block start %}
+
+<section class="d-flex align-items-center justify-content-center" style="margin-top: 80px">
+    <div class="container">
+        <div class="row justify-content-center" style="margin-top: 100px;">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg p-4 rounded">
+                    <div class="text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                             class="img-fluid mb-3" alt="Login Image" style="max-width: 80px;">
+                    </div>
+                    <h3 class="text-center mb-4">Login</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'reset_password' %}" class="text-body">Forgot password?</a>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-dark w-100"
+                                    style="background-color: #4a4339; color: white;">Login
+                            </button>
+                        </div>
+
+                        <p class="small fw-bold mt-3 text-center">
+                            Want to join our team?
+                            <a href="{% url 'new-user' %}" class="text-decoration-none"
+                               style="color: #4a4339;">Register</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

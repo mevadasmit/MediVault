@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block start %}
+<div class="container" style="margin-top: 115px">
+    <h2 class="mb-3">Review Your Order</h2>
+
+    {% if cart_items_by_supplier %}
+        {% for supplier, items in cart_items_by_supplier.items %}
+            <h4 class="mt-3">Supplier: {{ supplier.first_name }} {{ supplier.last_name }}</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.inventory.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.inventory.unit_price }}</td>
+                    <td>₹{{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+
+        <h5>Total Products: {{ cart.total_products }}</h5>
+        <h4 class="mt-3">Total Price: ₹{{ cart.total_price }}</h4>
+
+        <form method="post" action="{% url 'order_create' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-lg">Confirm & Place Order</button>
+            <a href="{% url 'view_cart' %}" class="btn btn-secondary">Back to Cart</a>
+        </form>
+
+    {% else %}
+        <div class="alert alert-warning">Your cart is empty. Add items before placing an order.</div>
+        <a href="{% url 'view_cart' %}" class="btn btn-primary">< Go to Cart ></a>
+    {% endif %}
+</div>
+{% endblock %}

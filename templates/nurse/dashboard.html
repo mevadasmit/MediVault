@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+<div class="container-fluid mt-2 pt-4">
+    <div class="row mt-3 g-0">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light border-end mt-5 vh-100 p-4" style="background-color: #dfd3c3;">
+            <hr>
+            <ul class="nav flex-column ml-5">
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href=""><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'requests' %}"><i
+                            class="fas fa-user-nurse"></i> My Requests </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'new_request' %}"><i
+                            class="fas fa-boxes"></i> New Request </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 mt-4 p-4">
+
+            <!-- Dashboard Header -->
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+                <h2 class="fw-bold">Nurse Dashboard</h2>
+            </div>
+
+        </div> <!-- End of Main Content -->
+    </div> <!-- End of Row -->
+</div> <!-- End of Container -->
+
+{% endblock %}
