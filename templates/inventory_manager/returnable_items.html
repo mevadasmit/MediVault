@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% block start %}
+<div class="container" style="margin-top: 115px">
+    <h3 class="fw-bold">Returnable Inventory Items</h3>
+
+    {% if returnable_items %}
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Requested Item ID</th>
+            <th>Inventory Id</th>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Requested Quantity</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in returnable_items %}
+        <tr>
+            <td>{{ item.request.id }}</td>  <!-- Show Request ID -->
+            <td>{{ item.id }}</td>  <!-- Show RequestedItems ID -->
+            <td>{{ item.inventory.inventory.id }}</td>
+            <td>{{ item.inventory.inventory.name }}</td>
+            <td>{{ item.inventory.inventory.inventory_category.name }}</td>
+            <td>{{ item.quantity_requested }}</td>
+            <td>
+                {% if not item.is_returned %}
+                <form method="post" action="{% url 'return_inventory' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Return</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-danger">No returnable items available.</p>
+    {% endif %}
+
+    <a href="{% url 'request-list' %}" class="btn btn-secondary mt-3">Back to Requests</a>
+</div>
+{% endblock %}

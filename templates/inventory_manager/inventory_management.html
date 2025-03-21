@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+
+<div class="mt-5">
+    <div class="container" style="padding-top: 70px">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Inventory Management</h3>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered shadow-sm">
+                <thead class="bg-light">
+                <tr class="text-center">
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Stock Qty</th>
+                    <th>Reusable</th>
+                    <th>Supplier</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in inventory_items %}
+                <tr class="text-center">
+                    <td>{{ item.inventory.name }}</td>
+                    <td>{{ item.inventory.inventory_category.name }}</td>
+                    <td>{{ item.quantity_in_stock }}</td>
+                    <td>{{ item.inventory.is_reusable|yesno:"Yes,No" }}</td>
+                    <td>{{ item.inventory.supplier.first_name }} {{ item.inventory.supplier.last_name }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if is_paginated %}
+    <div class="d-flex justify-content-center mt-3">
+        {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mx-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mx-1" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mx-1" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mx-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-between">
+                <button class="btn btn-info"><a href="{% url 'inventory_manager_dashboard' %}"
+                                                style="text-decoration: none ; color: black">< Back To Main </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% block start %}
+<div class="container" style="margin-top: 115px">
+    <h2>Order Details</h2>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Supplier:</strong> {{ order.supplier.first_name }} {{ order.supplier.last_name }}</p>
+    <p><strong>Total Products:</strong> {{ order.total_products }}</p>
+    <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+
+    <h3 class="mt-4">Order Items</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in order.order_items.all %}
+        <tr>
+            <td>{{ item.inventory.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.unit_price }}</td>
+            <td>₹{{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'order_list' %}" class="btn btn-secondary">Back to Orders</a>
+</div>
+{% endblock %}
