@@ -40,7 +40,7 @@ It facilitates smooth operations for **nurses, inventory managers, and administr
 ```bash
  python -m venv venv
  source venv/bin/activate
-On Windows use: venv\Scripts\activate
+ On Windows use: venv\Scripts\activate
  pip install -r requirements.txt
 ```
 
