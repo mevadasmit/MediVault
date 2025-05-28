@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                     "category",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="main_admin.productcategory",
+                        to="main_admin.inventorycategory",
                     ),
                 ),
                 (
