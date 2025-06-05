@@ -34,7 +34,7 @@ CONFIRM_PASSWORD = "confirm_password"
 ### ROLES ###
 NURSE = "Nurse"
 SUPPLIER = "Supplier"
-INVENTORY__MANAGER = "InventoryManager"
+INVENTORY__MANAGER = "Inventory Manager"
 ADMIN = "Admin"
 
 ### HTTPS ###
