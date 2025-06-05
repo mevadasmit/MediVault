@@ -15,6 +15,9 @@ class Organization(CustomBaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class InventoryManager(CustomBaseModel):
     """
@@ -35,6 +38,9 @@ class InventoryCategory(CustomBaseModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class Inventory(CustomBaseModel):

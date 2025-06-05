@@ -32,7 +32,7 @@ class CustomUser(BaseModel, AbstractUser):
     objects = UserManager()
 
     USERNAME_FIELD = FIELD_EMAIL
-    REQUIRED_FIELDS = [FIELD_PHONE_NUMBER, FILED_FIRST_NAME, FIELD_LAST_NAME, FIELD_ROLE]
+    REQUIRED_FIELDS = [FIELD_PHONE_NUMBER, FILED_FIRST_NAME, FIELD_LAST_NAME]
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -41,4 +41,5 @@ class CustomUser(BaseModel, AbstractUser):
         """Sends a registration email using the utility function."""
         send_registration_email(self, raw_password)
 
-
+    class Meta:
+        ordering = ['-created_at']
